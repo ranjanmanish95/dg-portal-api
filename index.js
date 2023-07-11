@@ -106,7 +106,7 @@ app.get('/loginToken', async (req,res)=>{
         return  res.status(200).send({loginToken: loginToken});
     }
     catch(error){
-        return res.status(404).send({message:+ error });
+        return res.status(404).send({message: error });
     }
 })
 
