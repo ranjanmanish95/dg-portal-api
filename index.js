@@ -7,27 +7,26 @@ import cors from "cors";
 dotenv.config();
   
 const app = express();
-  
+const PORT = process.env.PORT || 5000;
 // Setting up middlewares to parse request body and cookies
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieparser());
 app.use(
     cors({
-      origin: "http://localhost:3000",
+      origin: "http://192.168.6.56:3000",
       credentials: true
     })
   );
-const refresh_url="http://14.97.142.161:8080/api/refresh-tokens";
-const access_url="http://14.97.142.161:8080/api/access-tokens";
-const login_url="http://14.97.142.161:8080/api/login-tokens";
+const refresh_url="http://192.168.6.56:8080/api/refresh-tokens";
+const access_url="http://192.168.6.56:8080/api/access-tokens";
+const login_url="http://192.168.6.56:8080/api/login-tokens";
 
 async function getRefreshToken(){        
     let ts = new Date().getTime();
     let data = {
-      userName: "dg@celestialsys.com",
-      password: "test",
-      clientOrgRef: "Data Governance"
+      userName: "admin@yellowfin.com.au",
+      password: "test"
      }
    const refreshResponse = await fetch(refresh_url, {
     method: "POST",
@@ -48,9 +47,8 @@ async function getRefreshToken(){
 async function getAccessToken(){        
     let ts = new Date().getTime();
     let data = {
-      userName: "dg@celestialsys.com",
-      password: "test",
-      clientOrgRef: "Data Governance"
+      userName: "admin@yellowfin.com.au",
+      password: "test"
      }
    let refreshToken = await getRefreshToken();
    const accessResponse = await fetch(access_url, {
@@ -72,9 +70,8 @@ async function getAccessToken(){
     async function getLoginToken(){        
         let ts = new Date().getTime();
         let data = {
-          userName: "dg@celestialsys.com",
-          password: "test",
-          clientOrgRef: "Data Governance"
+          userName: "admin@yellowfin.com.au",
+          password: "test"
          }
        let accessToken = await getAccessToken();
        const loginResponse = await fetch(login_url, {
@@ -96,9 +93,9 @@ async function getAccessToken(){
 const userCredentials = {
     username: 'admin',
     password: 'test',
-    email: 'dg@celestialsys.com'
+    email: 'admin@yellowfin.com.au'
 }
-const Url = 'http://34.236.87.39:8080'; 
+const Url = 'http://192.168.6.56:8080'; 
 
 app.get('/loginToken', async (req,res)=>{
     try{
@@ -125,6 +122,6 @@ app.post('/login', async (req, res) => {
     }
 });
   
-app.listen(process.env.PORT, () => {
-    console.log(`Server active on http://34.236.87.39:${process.env.PORT}!`);
+app.listen(PORT, () => {
+    console.log(`Server active on http://192.168.6.56:${PORT}!`);
 })
